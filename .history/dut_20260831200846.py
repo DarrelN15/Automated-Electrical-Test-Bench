@@ -11,3 +11,9 @@ class SimulatedDUT:
     def measure_voltage(self, rail):
         return self.voltage_rails[rail]
 
+if __name__ == "__main__":
+    dut = SimulatedDUT("PCM-0001")
+
+    print(dut.measure_voltage("12V"))
+    print(dut.measure_voltage("5V"))
+    print(dut.measure_voltage("3.3V"))

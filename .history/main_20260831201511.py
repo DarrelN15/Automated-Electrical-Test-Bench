@@ -42,27 +42,3 @@ overall_result = (
 )
 
 print(f"\nOverall Result: {overall_result}")
-
-results_directory = Path("results")
-results_directory.mkdir(exist_ok=True)
-
-output_file = results_directory / f"{dut.serial_number}_results.csv"
-
-with open(output_file, "w", newline="") as csvfile:
-    fieldnames = [
-        "test_name",
-        "measured_value",
-        "minimum",
-        "maximum",
-        "result"
-    ]
-
-    writer = csv.DictWriter(
-        csvfile,
-        fieldnames=fieldnames
-    )
-
-    writer.writeheader()
-    writer.writerows(results)
-
-print(f"Results saved to: {output_file}")

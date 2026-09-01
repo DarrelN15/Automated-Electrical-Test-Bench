@@ -5,7 +5,7 @@ class SimulatedDUT:
         self.voltage_rails = {
             "12V": 12.08,
             "5V": 5.02,
-            "3.3V": 3.01
+            "3.3V": 3.21
         }
 
     def measure_voltage(self, rail):

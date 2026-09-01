@@ -10,4 +10,3 @@ class SimulatedDUT:
 
     def measure_voltage(self, rail):
         return self.voltage_rails[rail]
-
