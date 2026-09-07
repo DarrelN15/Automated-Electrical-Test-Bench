@@ -1,0 +1,20 @@
+{
+    "device": "Power Control Module",
+    "tests": [
+      {
+        "rail": "12V",
+        "minimum": 11.4,
+        "maximum": 12.6
+      },
+      {
+        "rail": "5V",
+        "minimum": 4.75,
+        "maximum": 5.25
+      },
+      {
+        "rail": "3.3V",
+        "minimum": 3.135,
+        "maximum": 3.465
+      }
+    ]
+  }

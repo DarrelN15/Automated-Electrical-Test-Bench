@@ -7,16 +7,9 @@ from voltage_test import run_voltage_test
 
 dut = SimulatedDUT("PCM-0001")
 
-with open("test_config.json", "r") as config_file:
-    config = json.load(config_file)
-
 results = []
 
-for test in config["tests"]:
-    rail = test["rail"]
-    minimum = test["minimum"]
-    maximum = test["maximum"]
-
+for rail, minimum, maximum in test_limits:
     result = run_voltage_test(
         dut,
         rail,
@@ -25,6 +18,7 @@ for test in config["tests"]:
     )
 
     results.append(result)
+
 
 print(f"Testing DUT: {dut.serial_number}\n")
 
