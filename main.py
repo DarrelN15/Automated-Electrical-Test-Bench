@@ -1,13 +1,18 @@
 import csv
 import json
+import sys
 from pathlib import Path
+from datetime import datetime
 
 from dut import SimulatedDUT
 from voltage_test import run_voltage_test
 
+serial_number = sys.argv[1] if len(sys.argv) > 1 else "PCM-0001"
+fault_mode = sys.argv[2] if len(sys.argv) > 2 else None
+
 dut = SimulatedDUT(
-    "PCM-0001",
-    # fault_mode="HIGH_5V"
+    serial_number,
+    fault_mode=fault_mode
 )
 
 with open("test_config.json", "r") as config_file:
@@ -50,9 +55,32 @@ print(f"\nOverall Result: {overall_result}")
 results_directory = Path("results")
 results_directory.mkdir(exist_ok=True)
 
-output_file = results_directory / f"{dut.serial_number}_results.csv"
+timestamp = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+run_metadata = {
+    "serial_number": dut.serial_number,
+    "device": config["device"],
+    "timestamp": timestamp,
+    "fault_mode": fault_mode if fault_mode else "NONE",
+    "overall_result": overall_result
+}
+
+output_file = (
+    results_directory
+    / f"{dut.serial_number}_{timestamp}_results.csv"
+)
 
 with open(output_file, "w", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+
+    writer.writerow(["Test Run Metadata"])
+    writer.writerow(["serial_number", run_metadata["serial_number"]])
+    writer.writerow(["device", run_metadata["device"]])
+    writer.writerow(["timestamp", run_metadata["timestamp"]])
+    writer.writerow(["fault_mode", run_metadata["fault_mode"]])
+    writer.writerow(["overall_result", run_metadata["overall_result"]])
+
+    writer.writerow([])
+
     fieldnames = [
         "test_name",
         "measured_value",
@@ -61,12 +89,12 @@ with open(output_file, "w", newline="") as csvfile:
         "result"
     ]
 
-    writer = csv.DictWriter(
+    dict_writer = csv.DictWriter(
         csvfile,
         fieldnames=fieldnames
     )
 
-    writer.writeheader()
-    writer.writerows(results)
+    dict_writer.writeheader()
+    dict_writer.writerows(results)
 
 print(f"Results saved to: {output_file}")

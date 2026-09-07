@@ -1,0 +1,11 @@
+Test Run Metadata
+serial_number,PCM-0010
+device,Power Control Module
+timestamp,2026-09-07_133520
+fault_mode,HIGH_5V
+overall_result,FAIL
+
+test_name,measured_value,minimum,maximum,result
+12V Rail Voltage,12.08,11.4,12.6,PASS
+5V Rail Voltage,5.5,4.75,5.25,FAIL
+3.3V Rail Voltage,3.31,3.135,3.465,PASS
