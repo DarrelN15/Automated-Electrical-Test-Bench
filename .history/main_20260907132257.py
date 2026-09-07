@@ -5,10 +5,7 @@ from pathlib import Path
 from dut import SimulatedDUT
 from voltage_test import run_voltage_test
 
-dut = SimulatedDUT(
-    "PCM-0001",
-    # fault_mode="HIGH_5V"
-)
+dut = SimulatedDUT("PCM-0001", self_fault="LOW_12V")
 
 with open("test_config.json", "r") as config_file:
     config = json.load(config_file)
