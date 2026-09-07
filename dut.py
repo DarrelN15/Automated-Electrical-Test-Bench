@@ -1,7 +1,21 @@
 class SimulatedDUT:
+    VALID_FAULT_MODES = {
+        "LOW_3V3",
+        "HIGH_5V",
+        "LOW_12V"
+    }
+
     def __init__(self, serial_number, fault_mode=None):
         self.serial_number = serial_number
         self.fault_mode = fault_mode
+
+        if (
+            self.fault_mode is not None
+            and self.fault_mode not in self.VALID_FAULT_MODES
+        ):
+            raise ValueError(
+                f"Invalid fault mode: {self.fault_mode}"
+            )
 
         self.voltage_rails = {
             "12V": 12.08,

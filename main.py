@@ -1,14 +1,37 @@
 import csv
 import json
-import sys
+import argparse
 from pathlib import Path
 from datetime import datetime
 
 from dut import SimulatedDUT
 from voltage_test import run_voltage_test
 
-serial_number = sys.argv[1] if len(sys.argv) > 1 else "PCM-0001"
-fault_mode = sys.argv[2] if len(sys.argv) > 2 else None
+parser = argparse.ArgumentParser(
+    description="Automated Electrical Test Bench"
+)
+
+parser.add_argument(
+    "--serial",
+    default="PCM-0001",
+    help="Serial number of the device under test"
+)
+
+parser.add_argument(
+    "--fault",
+    choices=[
+        "LOW_3V3",
+        "HIGH_5V",
+        "LOW_12V"
+    ],
+    default=None,
+    help="Optional simulated hardware fault"
+)
+
+args = parser.parse_args()
+
+serial_number = args.serial
+fault_mode = args.fault
 
 dut = SimulatedDUT(
     serial_number,
