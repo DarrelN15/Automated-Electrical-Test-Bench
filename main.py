@@ -55,6 +55,9 @@ def run_test_sequence(dut, config):
 
 
 def calculate_overall_result(results):
+    if not results:
+        return "NO TESTS"
+
     if all(result["result"] == "PASS" for result in results):
         return "PASS"
 
